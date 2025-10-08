@@ -2,6 +2,8 @@
 #include <fstream>
 #include <filesystem>
 #include <cstdlib>
+#include "../hdrs/Map.hpp"
+
 
 bool	verifyFile(const std::string &filename)
 {
@@ -35,4 +37,8 @@ int	main(int argc, const char *argv[])
 	}
 	if (!verifyFile(std::string(argv[1])))
 		return EXIT_FAILURE;
+	Lge engine;
+	if (engine.parseFile(std::string(argv[1])) != 0)
+		return EXIT_FAILURE;
+	return EXIT_SUCCESS;
 }

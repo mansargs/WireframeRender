@@ -1,20 +1,23 @@
 #pragma once
 
 #include <vector>
+#include <string>
+
+using gridContent = std::vector<std::vector<std::string>>;
 
 struct Vec3
 {
-	float x;
-	float y;
-	float z;
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
 };
 
 struct Rgba
 {
-	float r;
-	float g;
-	float b;
-	float a;
+	float r = 0.0f;
+	float g = 0.0f;
+	float b = 0.0f;
+	float a = 0.0f;
 };
 
 struct Pixel
@@ -23,8 +26,21 @@ struct Pixel
 	Rgba color;
 };
 
-class Map
+class Lge
 {
-	std::vector<std::vector<Pixel>> mapContent;
+	using gridPixels = std::vector<std::vector<Pixel>>;
+	private:
+		size_t		width;
+		size_t		height;
+		gridPixels	mapPixels;
+	private:
+		int		parseLine(const std::string &line, gridContent &mapContent);
+		int		convertToPixels(const gridContent &mapContent);
+		void	printMap(const gridContent &mapContent) const;
+	public:
+		Lge();
+		int		parseFile(const std::string &filename);
+		size_t	getWidth() const;
+		size_t	getHeight() const;
 };
 
