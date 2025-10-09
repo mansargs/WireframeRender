@@ -1,6 +1,7 @@
 #include "../hdrs/Map.hpp"
 #include <fstream>
 #include <iostream>
+#include <cctype>
 #include <sstream>
 #include <iomanip>
 
@@ -47,26 +48,68 @@ int Lge::parseLine(const std::string &line, gridContent &mapContent)
 	return 0;
 }
 
+bool	Lge::validNumber(const std::string &strNumber)
+{
+	if (strNumber.empty())
+		return false;
+	if (strNumber.length() == 1 && strNumber[0] == '0')
+		return true;
+	if (strNumber[0] == '0')
+		return false;
+	if (strNumber.length() > 4)
+		return false;
+	for (const auto &c : strNumber)
+	{
+		if (!std::isdigit(static_cast<unsigned char>(c)))
+			return false;
+	}
+	return true;
+}
+
+bool	Lge::validColor(const std::string &strColor)
+{
+	size_t i = 1;
+
+	if (strColor.empty())
+		return true;
+	if (strColor.length() != 5 && strColor.length() != 6
+		&& strColor.length() != 8 && strColor.length() != 10)
+		return false;
+	if (strColor[i] != '#')
+		return false;
+	++i;
+	for (; i < strColor.length(); ++i)
+	{
+		if (!std::isxdigit(static_cast<unsigned char>(strColor[i])))
+			return false;
+	}
+	return true;
+}
+
 // int	Lge::convertToPixels(const gridContent &mapContent)
 // {
-// 	mapPixels.reserve(height);
+// 	mapPixels.resize(height);
 // 	for (auto &row : mapPixels)
-// 	row.reserve(width);
+// 	row.resize(width);
 
-// 	for (const auto & row : mapContent)
+// 	for (size_t i = 0; i < height; ++i)
 // 	{
-// 		for (const auto & cell : row)
+// 		for (size_t j = 0; j < height; ++j)
 // 		{
 // 			std::string zAxis, color;
-// 			size_t found = cell.find(',');
+// 			size_t found = mapContent[i][j].find(',');
 // 			if (found == std::string::npos)
-// 				zAxis = cell;
+// 				zAxis = mapContent[i][j];
 // 			else
 // 			{
-// 				zAxis = cell.substr(0, found);
-// 				color = cell.substr(found);
+// 				zAxis = mapContent[i][j].substr(0, found);
+// 				color = mapContent[i][j].substr(found);
 // 			}
-
+// 			if (!validNumber(zAxis))
+// 				return -1;
+// 			if (!validColor(color))
+// 				return -1;
+// 			fillToCell(mapPixels[i][j], zAxis, color);
 // 		}
 // 	}
 

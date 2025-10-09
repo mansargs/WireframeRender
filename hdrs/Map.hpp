@@ -34,9 +34,11 @@ class Lge
 		size_t		height;
 		gridPixels	mapPixels;
 	private:
-		int		parseLine(const std::string &line, gridContent &mapContent);
-		int		convertToPixels(const gridContent &mapContent);
-		void	printMap(const gridContent &mapContent) const;
+		int			parseLine(const std::string &line, gridContent &mapContent);
+		int			convertToPixels(const gridContent &mapContent);
+		void		printMap(const gridContent &mapContent) const;
+		static bool	validColor(const std::string &strColor);
+		static bool	validNumber(const std::string &strNumber);
 	public:
 		Lge();
 		int		parseFile(const std::string &filename);
