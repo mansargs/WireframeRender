@@ -7,17 +7,17 @@ using gridContent = std::vector<std::vector<std::string>>;
 
 struct Vec3
 {
-	float x = 0.0f;
-	float y = 0.0f;
+	float x;
+	float y;
 	float z = 0.0f;
 };
 
 struct Rgba
 {
-	float r = 0.0f;
-	float g = 0.0f;
-	float b = 0.0f;
-	float a = 0.0f;
+	float r = 255.0f;
+	float g = 255.0f;
+	float b = 255.0f;
+	float a = 1.0f;
 };
 
 struct Pixel
@@ -39,10 +39,12 @@ class Lge
 		void		printMap(const gridContent &mapContent) const;
 		static bool	validColor(const std::string &strColor);
 		static bool	validNumber(const std::string &strNumber);
+		void		cellColor(Pixel &cell, const std::string &zAxis, const std::string &color);
 	public:
 		Lge();
 		int		parseFile(const std::string &filename);
 		size_t	getWidth() const;
 		size_t	getHeight() const;
+		static bool	verifyFile(const std::string &filename);
 };
 

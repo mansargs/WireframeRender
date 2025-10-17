@@ -2,6 +2,8 @@ NAME = LineEngine
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17
+INCLUDES = `sdl2-config --cflags`
+LDFLAGS  = `sdl2-config --libs`
 
 SRC_DIR = source
 BUILD_DIR = build
@@ -16,12 +18,12 @@ all: $(BIN_DIR)/$(NAME)
 
 $(BIN_DIR)/$(NAME): $(OBJ)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 	@echo "✅ Build complete: $@"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HDRS)/*.hpp
 	@mkdir -p $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
